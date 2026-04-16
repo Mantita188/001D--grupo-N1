@@ -1,0 +1,26 @@
+name: Terraform Lint
+
+on:
+  workflow_call:
+    inputs:
+      path:
+        required: true
+        type: string
+
+jobs:
+  tflint:
+    name: Ejecutar TFLint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Instalar TFLint
+        uses: terraform-linters/setup-tflint@v4
+
+      - name: Inicializar TFLint
+        run: tflint --init
+
+      - name: Ejecutar TFLint
+        run: tflint ${{ inputs.path }}
